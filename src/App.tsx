@@ -65,6 +65,8 @@ function App() {
         const fileList = Array.from(files);
 
         const isNotExcelFile = fileList.map((file, idx) => {
+          console.log(`${idx} file type: ${file.type}`);
+
           if (!acceptFileTypeList.includes(file.type)) {
             return idx;
           }
@@ -74,17 +76,15 @@ function App() {
           alert('엑셀 타입의 파일만 선택하실 수 있습니다.');
 
           inputRef.current.files = deleteExceptFiles(files as File[]);
-
-          const fileArray = Array.from(inputRef.current.files);
-
-          const fileNameList = fileArray.map((file, idx) => {
-            return file.name;
-          });
-
-          setFileName(fileNameList.join(', '));
-
-          return;
         }
+
+        const fileArray = Array.from(inputRef.current.files);
+
+        const fileNameList = fileArray.map((file, idx) => {
+          return file.name;
+        });
+
+        setFileName(fileNameList.join(', '));
       }
     } else {
       window.removeEventListener('beforeunload', handleBeforeUnload);
