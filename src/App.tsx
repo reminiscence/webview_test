@@ -64,15 +64,13 @@ function App() {
       if (files) {
         const fileList = Array.from(files);
 
-        const isNotExcelFile = fileList.map((file, idx) => {
+        const isNotExcelFileList = fileList.filter((file, idx) => {
           console.log(`${idx} file type: ${file.type}`);
 
-          if (!acceptFileTypeList.includes(file.type)) {
-            return idx;
-          }
+          return !acceptFileTypeList.includes(file.type);
         });
 
-        if (isNotExcelFile.length > 0) {
+        if (isNotExcelFileList.length > 0) {
           alert('엑셀 타입의 파일만 선택하실 수 있습니다.');
 
           inputRef.current.files = deleteExceptFiles(files as File[]);
