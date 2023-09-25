@@ -1,11 +1,17 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { modals } from '@mantine/modals';
 import './App.css';
+import { Divider } from '@mantine/core';
 
 
 function App() {
   const inputRef = useRef(null);
   const [fileName, setFileName] = useState<string>('');
+  const [ua, setUa] = useState<string>('');
+
+  useEffect(() => {
+    setUa(window.navigator.userAgent);
+  }, []);
 
   // todo: 아래 custom modal 을 새로고침/뒤로가기 때 띄우는 행동은 동작하지 않음...
   // 브라우저단에서 동작을 막아두었기 때문에, 시스템 메세지로만 가능함.
@@ -108,7 +114,7 @@ function App() {
           <label htmlFor={'ex_file'}>
             <h4>{'file input'}</h4>
             <div style={{
-              width: '100%',
+              width: 'calc(100% - 20px)',
               height: '30px',
               border: '2px solid #f0f0f0',
               borderRadius: '5px',
@@ -125,6 +131,16 @@ function App() {
           accept={acceptFileTypeList.join(',')}
           style={{ position: 'absolute', width: 0, height: 0, margin: '-1px', overflow: 'hidden' }}
           onChange={handleChangeFileInput} />
+        <Divider w={'100%'} orientation={'horizontal'} my={16} />
+        <div style={{
+          width: 'calc(100% - 20px)',
+          border: '2px solid #f0f0f0',
+          borderRadius: '5px',
+          padding: '5px 10px',
+          lineHeight: 1.8,
+        }}>
+          {`My UA: ${ua}`}
+        </div>
       </div>
     </>
   );
