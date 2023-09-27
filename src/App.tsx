@@ -3,14 +3,26 @@ import { modals } from '@mantine/modals';
 import './App.css';
 import { Divider } from '@mantine/core';
 
-
 function App() {
   const inputRef = useRef(null);
   const [fileName, setFileName] = useState<string>('');
   const [ua, setUa] = useState<string>('');
+  const messageRef = useRef<HTMLDivElement | null>(null);
+  const [msg, setMsg] = useState<string>('');
+
+  const onMessageFromApp = (e: MessageEvent) => {
+    e.stopPropagation();
+
+    setMsg(msg);
+  };
 
   useEffect(() => {
     setUa(window.navigator.userAgent);
+    window.addEventListener('message', onMessageFromApp);
+
+    return () => {
+      window.removeEventListener('message', onMessageFromApp);
+    };
   }, []);
 
   // todo: 아래 custom modal 을 새로고침/뒤로가기 때 띄우는 행동은 동작하지 않음...
@@ -97,7 +109,11 @@ function App() {
   };
 
   const handleCloseWebView = () => {
-    window.close();
+    // @ts-ignore
+    if (window?.ReactNativeWebView) {
+      // @ts-ignore
+      window.ReactNativeWebView?.postMessage(JSON.stringify({ key: 'close web view' }));
+    }
   };
 
   return (
@@ -147,6 +163,22 @@ function App() {
         </div>
         <Divider w={'100%'} orientation={'horizontal'} my={16} />
         <button onClick={handleCloseWebView}>{'webview close'}</button>
+        <div>
+          <div>{'Message from App'}</div>
+          <div
+            ref={messageRef}
+            style={{
+              width: '100%',
+              height: '500px',
+              backgroundColor: '#e0e0e0',
+              border: '2px solid #f0f0f0',
+              borderRadius: '5px',
+              padding: 32,
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+            }}>{msg}</div>
+        </div>
       </div>
     </>
   );
