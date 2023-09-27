@@ -163,13 +163,13 @@ function App() {
         </div>
         <Divider w={'100%'} orientation={'horizontal'} my={16} />
         <button onClick={handleCloseWebView}>{'webview close'}</button>
-        <div>
-          <div>{'Message from App'}</div>
+        <div style={{ width: 'calc(100% - 20px)' }}>
+          <div style={{ width: '100%'}}>{'Message from App'}</div>
           <div
             ref={messageRef}
             style={{
-              width: '100%',
-              height: '500px',
+              width: 'calc(100% - 64px)',
+              height: '300px',
               backgroundColor: '#e0e0e0',
               border: '2px solid #f0f0f0',
               borderRadius: '5px',
