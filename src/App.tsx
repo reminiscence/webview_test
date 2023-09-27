@@ -96,6 +96,10 @@ function App() {
     }
   };
 
+  const handleCloseWebView = () => {
+    window.close();
+  };
+
   return (
     <>
       <div style={{
@@ -141,6 +145,8 @@ function App() {
         }}>
           {`My UA: ${ua}`}
         </div>
+        <Divider w={'100%'} orientation={'horizontal'} my={16} />
+        <button onClick={handleCloseWebView}>{'webview close'}</button>
       </div>
     </>
   );
