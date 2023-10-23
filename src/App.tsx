@@ -9,6 +9,7 @@ function App() {
   const [ua, setUa] = useState<string>('');
   const messageRef = useRef<HTMLDivElement | null>(null);
   const [msg, setMsg] = useState<string>('');
+  const [cls, setCls] = useState<string>('');
 
   const onMessageFromApp = (e: MessageEvent) => {
     e.stopPropagation();
@@ -118,6 +119,14 @@ function App() {
 
   return (
     <>
+      <button onClick={() => {
+        setCls('open');
+
+        setTimeout(() => {
+          setCls('');
+        }, 5000);
+      }}>{'loading test'}</button>
+      <div className={''} style={{ visibility: `${cls === 'open' ? 'visible':'hidden'}`, opacity: `${cls === 'open' ? 1 : 0}`, position: 'fixed', top: 0, left: 0, width: '100%', height: '100dvh', backgroundColor: 'rgba(0,0,0,0.6)'}} />
       <div style={{
         width: 'calc(100% - 64px)',
         height: '100%',
