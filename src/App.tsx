@@ -10,6 +10,7 @@ function App() {
   const messageRef = useRef<HTMLDivElement | null>(null);
   const [msg, setMsg] = useState<string>('');
   const [cls, setCls] = useState<string>('');
+  const [numValue, setNumValue] = useState<string>('');
 
   const onMessageFromApp = (e: MessageEvent) => {
     e.stopPropagation();
@@ -187,6 +188,24 @@ function App() {
               alignItems: 'flex-start',
               justifyContent: 'center',
             }}>{msg}</div>
+        </div>
+        <div style={{
+          width: 'calc(100% - 64px)',
+          height: '300px',
+          backgroundColor: '#e0e0e0',
+          border: '2px solid #f0f0f0',
+          borderRadius: '5px',
+          padding: 32,
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+        }}>
+          <div>{'input test'}</div>
+          <input type={'text'} inputMode={"numeric"} maxLength={3} value={numValue} onChange={(e) => {
+            const val = e.currentTarget.value;
+
+            setNumValue(val.replace(/\D/g, ''));
+          }} />
         </div>
       </div>
     </>
