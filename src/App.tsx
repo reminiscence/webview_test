@@ -117,10 +117,12 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       window.addEventListener("message", receiveMessage, false);
+      document.addEventListener("message", receiveMessage, false);
     }, 200);
 
     return () => {
       window.removeEventListener('message', receiveMessage);
+      document.removeEventListener('message', receiveMessage);
     };
   }, []);
 
