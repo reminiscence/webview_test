@@ -70,11 +70,32 @@ function App() {
 
   const receiveMessage = (e: MessageEvent) => {
     if (e.data) {
-      const { action, payload } = e.data || {};
-      if (action === "SENDING_OCR_DATA") {
-        updateInfo(payload.ocrData);
-      } else if (action === "INIT_MRZ") {
-        processOCR(payload.data);
+      if (typeof e.data === 'string') {
+        try {
+          const data = JSON.parse(e.data);
+
+          const { action, payload } = data || {};
+
+          if (action === "INIT_MRZ") {
+            processOCR(payload.data);
+          }
+        } catch (e) {
+          console.log('err recv msg');
+          // @ts-ignore
+          if (window?.ReactNativeWebView) {
+            // @ts-ignore
+            window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: 'recv msg error' } }));
+          } else {
+            console.log('err..!')
+          }
+        }
+      } else {
+        const { action, payload } = e.data || {};
+        if (action === "SENDING_OCR_DATA") {
+          updateInfo(payload.ocrData);
+        } else if (action === "INIT_MRZ") {
+          processOCR(payload.data);
+        }
       }
     }
   };
