@@ -88,16 +88,18 @@ function App() {
 
             processOCR(payload.data);
           }
-        } catch (e) {
-          console.log('err recv msg');
-          alert(`recv msg error : ${e.data}`);
+        } catch (err) {
           setErrorList([...errorList, `recv msg error : ${e.data}`]);
 
           // @ts-ignore
           if (window?.ReactNativeWebView) {
+            alert(`recv msg error : ${e.data}`);
+
             // @ts-ignore
             window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: 'recv msg error' } }));
           } else {
+            alert(`recv msg error - not window rn wv : ${e.data}`);
+
             console.log('err..!')
           }
         }
