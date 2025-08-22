@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 function App() {
   const iframeRef = useRef(null);
+  const [errorList, setErrorList] = useState([]);
 
   const updateInfo = (info) => {
     const { scanStatus, data } = info || {};
@@ -22,6 +23,8 @@ function App() {
           console.log('success!', passportData)
         }
       } else {
+        setErrorList([...errorList, 'No OCR Information']);
+
         // @ts-ignore
         if (window?.ReactNativeWebView) {
           // @ts-ignore
@@ -33,6 +36,7 @@ function App() {
     }
 
     if (scanStatus === 'error') {
+      setErrorList([...errorList, 'Error in file scan']);
       // @ts-ignore
       if (window?.ReactNativeWebView) {
         // @ts-ignore
@@ -43,6 +47,8 @@ function App() {
     }
 
     if (scanStatus === 'default') {
+      setErrorList([...errorList, 'Unknown error']);
+
       // @ts-ignore
       if (window?.ReactNativeWebView) {
         // @ts-ignore
@@ -81,6 +87,9 @@ function App() {
           }
         } catch (e) {
           console.log('err recv msg');
+          alert(`recv msg error : ${e.data}`);
+          setErrorList([...errorList, `recv msg error : ${e.data}`]);
+
           // @ts-ignore
           if (window?.ReactNativeWebView) {
             // @ts-ignore
@@ -114,6 +123,13 @@ function App() {
   return (
     <>
       <div>
+        <div style={{ width: '100vw', height: '100vh', background: '#aaa', overflow: 'auto'}}>
+          {errorList.map((err, idx) => {
+            return (
+              <div key={`err_${idx}`} style={{ marginBottom: '10px'}}>{err}</div>
+            )
+          })}
+        </div>
         <iframe
           width="0%"
           height="0px"
