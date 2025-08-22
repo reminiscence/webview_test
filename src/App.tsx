@@ -76,8 +76,6 @@ function App() {
 
   const receiveMessage = (e: MessageEvent) => {
     if (e.data) {
-      setErrorList([...errorList, `recv msg! : ${e?.data}`]);
-
       if (typeof e.data === 'string') {
 
         try {
@@ -124,7 +122,7 @@ function App() {
       window.removeEventListener('message', receiveMessage);
       document.removeEventListener('message', receiveMessage);
     };
-  }, []);
+  }, [errorList]);
 
 
   return (
