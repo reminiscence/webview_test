@@ -77,7 +77,7 @@ function App() {
   const receiveMessage = (e: MessageEvent) => {
     if (e.data) {
       if (typeof e.data === 'string') {
-        alert(`recv msg! : ${e?.data}`);
+        setErrorList([...errorList, `recv msg! : ${e?.data}`]);
 
         try {
           const data = JSON.parse(e.data);
