@@ -76,8 +76,9 @@ function App() {
 
   const receiveMessage = (e: MessageEvent) => {
     if (e.data) {
+      setErrorList([...errorList, `recv msg! : ${e?.data}`]);
+
       if (typeof e.data === 'string') {
-        setErrorList([...errorList, `recv msg! : ${e?.data}`]);
 
         try {
           const data = JSON.parse(e.data);
@@ -85,7 +86,9 @@ function App() {
           const { action, payload } = data || {};
 
           if (action === "INIT_MRZ") {
-            processOCR(payload.data);
+            setErrorList([...errorList, `process!!`]);
+
+            // processOCR(payload.data);
           }
         } catch (e) {
           console.log('err recv msg');
@@ -132,13 +135,13 @@ function App() {
             )
           })}
         </div>
-        <iframe
-          width="0%"
-          height="0px"
-          ref={iframeRef}
-          src="ocr-frame/ocr.html"
-          title="ocr-processor"
-        />
+        {/*<iframe*/}
+        {/*  width="0%"*/}
+        {/*  height="0px"*/}
+        {/*  ref={iframeRef}*/}
+        {/*  src="ocr-frame/ocr.html"*/}
+        {/*  title="ocr-processor"*/}
+        {/*/>*/}
       </div>
     </>
   );
