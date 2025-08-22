@@ -12,13 +12,10 @@ function App() {
       if (data && data.parsed && data.parsed.fields) {
         // @ts-ignore
         const passportData = { ...data.parsed.fields };
-        // passportData.birthDate = parseDate(passportData.birthDate);
-        // passportData.expirationDate = parseDate(passportData.expirationDate);
-
         // @ts-ignore
         if (window?.ReactNativeWebView) {
           // @ts-ignore
-          window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT', payload: { data: passportData } }));
+          window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT', payload: { data: data } }));
         } else {
           console.log('success!', passportData)
         }
