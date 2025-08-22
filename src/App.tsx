@@ -75,10 +75,10 @@ function App() {
   };
 
   const receiveMessage = (e: MessageEvent) => {
-    alert(`recv msg! : ${e?.data}`);
-
     if (e.data) {
       if (typeof e.data === 'string') {
+        alert(`recv msg! : ${e?.data}`);
+
         try {
           const data = JSON.parse(e.data);
 
@@ -125,7 +125,7 @@ function App() {
   return (
     <>
       <div>
-        <div style={{ width: '100vw', height: '80vh', background: '#aaa', overflow: 'auto'}}>
+        <div style={{ width: '80vw', height: '80vh', background: '#aaa', overflow: 'auto'}}>
           {errorList.map((err, idx) => {
             return (
               <div key={`err_${idx}`} style={{ marginBottom: '10px'}}>{err}</div>
