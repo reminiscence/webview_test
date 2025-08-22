@@ -28,7 +28,7 @@ function App() {
         // @ts-ignore
         if (window?.ReactNativeWebView) {
           // @ts-ignore
-          window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: 'No OCR Information' } }));
+          window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: data } }));
         } else {
           console.log('err..!')
         }
