@@ -25,14 +25,32 @@ function App() {
         // @ts-ignore
         if (window?.ReactNativeWebView) {
           // @ts-ignore
-          window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: 'No OCR Information' }));
+          window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: 'No OCR Information' } }));
         } else {
           console.log('err..!')
         }
       }
     }
 
-    console.log("updateInfo=>", scanStatus, data);
+    if (scanStatus === 'error') {
+      // @ts-ignore
+      if (window?.ReactNativeWebView) {
+        // @ts-ignore
+        window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: 'Error in file scan' } }));
+      } else {
+        console.log('err..!')
+      }
+    }
+
+    if (scanStatus === 'default') {
+      // @ts-ignore
+      if (window?.ReactNativeWebView) {
+        // @ts-ignore
+        window.ReactNativeWebView?.postMessage(JSON.stringify({ action: 'RESULT_ERR', payload: { data: 'unknown error' } }));
+      } else {
+        console.log('err..!')
+      }
+    }
   };
 
   const processOCR = (data: string) => {
@@ -43,11 +61,11 @@ function App() {
     const iframeContentWindow = iframeRef.current.contentWindow;
 
     iframeContentWindow.postMessage(postData);
-    console.log(
-      "** init post message from the client",
-      postData,
-      iframeContentWindow
-    );
+    // console.log(
+    //   "** init post message from the client",
+    //   postData,
+    //   iframeContentWindow
+    // );
   };
 
   const receiveMessage = (e: MessageEvent) => {
