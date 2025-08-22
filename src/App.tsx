@@ -86,7 +86,7 @@ function App() {
           if (action === "INIT_MRZ") {
             setErrorList([...errorList, `process!!`]);
 
-            // processOCR(payload.data);
+            processOCR(payload.data);
           }
         } catch (e) {
           console.log('err recv msg');
