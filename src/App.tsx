@@ -89,8 +89,6 @@ function App() {
             processOCR(payload.data);
           }
         } catch (err) {
-          setErrorList([...errorList, `recv msg error : ${e.data}`]);
-
           // @ts-ignore
           if (window?.ReactNativeWebView) {
             alert(`recv msg error : ${e.data}`);
@@ -137,13 +135,13 @@ function App() {
             )
           })}
         </div>
-        {/*<iframe*/}
-        {/*  width="0%"*/}
-        {/*  height="0px"*/}
-        {/*  ref={iframeRef}*/}
-        {/*  src="ocr-frame/ocr.html"*/}
-        {/*  title="ocr-processor"*/}
-        {/*/>*/}
+        <iframe
+          width="0%"
+          height="0px"
+          ref={iframeRef}
+          src="ocr-frame/ocr.html"
+          title="ocr-processor"
+        />
       </div>
     </>
   );
